@@ -3,10 +3,10 @@
     <!--Seperated into grids-->
     <Grid Padding="16" RowSpacing="2" ColumnSpacing="2" RowDefinitions="2*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
         <!--Input-->
-        <Label x:Name="CurrentCalculation" FontSize="22" LineBreakMode="NoWrap" Grid.ColumnSpan="4" Text="" BackgroundColor="White" TextColor="Black" HorizontalTextAlignment="End" VerticalTextAlignment="Start" Grid.Row="0"/>
+        <Label x:Name="CurrentCalculation" FontSize="22" LineBreakMode="NoWrap" Grid.ColumnSpan="5" Text="" BackgroundColor="White" TextColor="Black" HorizontalTextAlignment="End" VerticalTextAlignment="Start" Grid.Row="0"/>
         <!--Output/Result-->
         <Label x:Name="resultText" FontSize="64" FontAttributes="Bold" Text="0" HorizontalTextAlignment="End" VerticalTextAlignment="End" TextColor="Black" LineBreakMode="NoWrap" Grid.ColumnSpan="5" />
-        <BoxView BackgroundColor="LightGray" HeightRequest="1" Grid.Row="0" VerticalOptions="End" Grid.ColumnSpan="5"/>
+
         <!--Clear calculator-->
         <Button FontSize="30" Text="C" Grid.Row="1" Grid.Column="0" BackgroundColor="#44344F" Clicked="OnClear"/>
         <Button FontSize="30" Text="CE" Grid.Row="1" Grid.Column="1" BackgroundColor="#44344F" Clicked="OnClear"/>
@@ -25,7 +25,7 @@
         <Button FontSize="30" Text="3" Grid.Row="4" Grid.Column="2" BackgroundColor="#98A6D4" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text="00" Grid.Row="5" Grid.Column="0" BackgroundColor="#98A6D4" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text="0" Grid.Row="5" Grid.Column="1" BackgroundColor="#98A6D4" Clicked="OnButtonClick"/>
-        <Button FontSize="30" Text="," Grid.Row="5" Grid.Column="2" BackgroundColor="#98A6D4" Clicked="OnButtonClick"/>
+        <Button FontSize="30" Text="." Grid.Row="5" Grid.Column="2" BackgroundColor="#98A6D4" Clicked="OnButtonClick"/>
         <!--Operators-->
         <Button FontSize="30" Text="÷" Grid.Row="2" Grid.Column="4" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text="*" Grid.Row="2" Grid.Column="3" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
@@ -34,7 +34,7 @@
         <Button FontSize="30" Text=")" Grid.Row="1" Grid.Column="4" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text="(" Grid.Row="1" Grid.Column="3" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text="^" Grid.Row="1" Grid.Column="2" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
-        <Button FontSize="30" Text="√" Grid.Row="4" Grid.Column="3" BackgroundColor="#564D80" Clicked="OnSelectOperator"/>
+        <Button FontSize="30" Text="√" Grid.Row="4" Grid.Column="3" BackgroundColor="#564D80" Clicked="OnSqrtClick"/>
         <!--Calculate-->
         <Button FontSize="30" BackgroundColor="#44344F" Text="=" Grid.Row="5" Grid.Column="4" Clicked="OnCalculate"/>
     </Grid>
