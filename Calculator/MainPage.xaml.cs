@@ -8,10 +8,11 @@ namespace Calculator
     {
         enum CalcState
         {
-            Replace,
-            DontReplace
+            Replace, // replace the current number if number is inputed
+            Normal,
+            InParantheses // essentially don't use lastEquation
         }
-        // currently just a bad version of a bool
+
         CalcState state = CalcState.Replace;
 
         string currentEquation
@@ -40,7 +41,7 @@ namespace Calculator
 
         string equation = string.Empty;
 
-        static char[] numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']; // . is a number, yes
+        static char[] numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', '(', ')']; // . ( ) are numbers, yes
         static char[] operators = ['x', '/', '+', '-', '%', '^'];
 
         public MainPage()
@@ -75,14 +76,34 @@ namespace Calculator
             if (input.IndexOfAny(numbers) == -1)
             {
                 isOperator = true;
+
+                
+            }
+
+            if (input.Contains('('))
+            {
+                state = CalcState.InParantheses;
+            }
+
+            if (input.Contains(')'))
+            {
+                // determin when first ( is escaped
+
+                int a1 = currentEquation.Split(')').Count();
+                int a2 = currentEquation.Split('(').Count();
+
+                if (a1 - 1 == a2)
+                {
+                    state = CalcState.Normal;
+                }
             }
 
             // below code should be cleaned
 
-            if (isOperator && (currentEquation.IndexOfAny(numbers) != -1 || state == CalcState.Replace))
+            if (isOperator && state != CalcState.InParantheses && (currentEquation.IndexOfAny(numbers) != -1 || state == CalcState.Replace) )
             {
 
-                if (state == CalcState.DontReplace)
+                if (state == CalcState.Normal)
                 {
                     lastEquation += currentEquation + " " + input + " ";
                     equation += input;
@@ -94,29 +115,33 @@ namespace Calculator
                 lastEquation = currentEquation + " " + input + " ";
                 currentEquation = string.Empty;
                 equation = lastEquation;
-                state = CalcState.DontReplace;
+                state = CalcState.Normal;
 
                 return;
             }
 
-            if (state == CalcState.DontReplace)
+            if (state == CalcState.Replace)
             {
-                currentEquation += input;
-                equation += input;
+                lastEquation = string.Empty;
+                currentEquation = input;
+                equation = input;
+                state = CalcState.Normal;
                 return;
             }
 
-            lastEquation = string.Empty;
-            currentEquation = input;
-            equation = input;
+            
 
-            state = CalcState.DontReplace;
+
+            currentEquation += input;
+            equation += input;
+
+
 
         }
 
         private void OnSqrtClick(object sender, EventArgs e)
         {
-            state = CalcState.DontReplace;
+            state = CalcState.Normal;
             currentEquation = "Sqrt(" + currentEquation + ")";
 
             equation += currentEquation;
@@ -128,7 +153,7 @@ namespace Calculator
             {
                 currentEquation = string.Empty;
                 equation = string.Empty;
-                state = CalcState.DontReplace;
+                state = CalcState.Normal;
             }
             // calculates it as persentage
 

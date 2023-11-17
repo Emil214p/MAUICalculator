@@ -12,7 +12,7 @@
         <Button FontSize="30" Text="CE" Grid.Row="1" Grid.Column="1" BackgroundColor="#44344F" Clicked="OnClear"/>
 
         <!--Percentages-->
-        <Button FontSize="30" Text="%" Grid.Row="5" Grid.Column="3" BackgroundColor="#564D80" Clicked="OnPercentage"/>
+        <Button FontSize="30" Text="%" Grid.Row="1" Grid.Column="2" BackgroundColor="#564D80" Clicked="OnPercentage"/>
         <!--Numbers 0-9 and decimal-->
         <Button FontSize="30" Text="7" Grid.Row="2" Grid.Column="0" BackgroundColor="#98A6D4" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text="8" Grid.Row="2" Grid.Column="1" BackgroundColor="#98A6D4" Clicked="OnButtonClick"/>
@@ -33,9 +33,8 @@
         <Button FontSize="30" Text="+" Grid.Row="3" Grid.Column="4" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text=")" Grid.Row="1" Grid.Column="4" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text="(" Grid.Row="1" Grid.Column="3" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
-        <Button FontSize="30" Text="^" Grid.Row="1" Grid.Column="2" BackgroundColor="#564D80" Clicked="OnButtonClick"/>
         <Button FontSize="30" Text="√" Grid.Row="4" Grid.Column="3" BackgroundColor="#564D80" Clicked="OnSqrtClick"/>
         <!--Calculate-->
-        <Button FontSize="30" BackgroundColor="#44344F" Text="=" Grid.Row="5" Grid.Column="4" Clicked="OnCalculate"/>
+        <Button FontSize="30" BackgroundColor="#44344F" Text="=" Grid.Row="5" Grid.Column="3" Clicked="OnCalculate"/>
     </Grid>
 </ContentPage>
