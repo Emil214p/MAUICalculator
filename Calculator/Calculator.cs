@@ -3,55 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NCalc;
 
 namespace Calculator
 {
     public static class Calculator
     {
-        public static double Calculate(double value1, double value2, string? mathOperator)
+        public static double Calculate(string opperation)
         {
-            double result = 0;
+            Expression e = new Expression(opperation);
 
-            switch (mathOperator)
+            object result = e.Evaluate();
+
+            if (result.GetType() == typeof(int))
             {
-                case "÷":
-                    result = value1 / value2;
-                    break;
-                case "×":
-                    result = value1 * value2;
-                    break;
-                case "+":
-                    result = value1 + value2;
-                    break;
-                case "-":
-                    result = value1 - value2;
-                    break;
+                return (double)(int)result;
             }
-
-            return result;
-        }
-    }
-
-    public static class DoubleExtensions
-    {
-        private const string Value = ",";
-
-        public static string ToTrimmedString(this double target, string decimalFormat)
-        {
-            string strValue = target.ToString(decimalFormat); //Get the stock string
-
-            //If there is a decimal point present
-            if (strValue.Contains(','))
-            {
-                //Remove all trailing zeros
-                strValue = strValue.TrimEnd('0');
-
-                //If all we are left with is a decimal point
-                if (strValue.EndsWith(Value)) //then remove it
-                    strValue = strValue.TrimEnd(',');
-            }
-
-            return strValue;
+            return (double)result;
         }
     }
 }
