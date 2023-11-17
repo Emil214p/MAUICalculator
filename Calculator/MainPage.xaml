@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Calculator.MainPage">
     <!--Seperated into grids-->
     <Grid Padding="16" RowSpacing="2" ColumnSpacing="2" RowDefinitions="2*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
@@ -10,6 +10,7 @@
         <!--Clear calculator-->
         <Button FontSize="30" Text="C" Grid.Row="1" Grid.Column="0" BackgroundColor="#44344F" Clicked="OnClear"/>
         <Button FontSize="30" Text="CE" Grid.Row="1" Grid.Column="1" BackgroundColor="#44344F" Clicked="OnClear"/>
+
         <!--Percentages-->
         <Button FontSize="30" Text="%" Grid.Row="5" Grid.Column="3" BackgroundColor="#564D80" Clicked="OnPercentage"/>
         <!--Numbers 0-9 and decimal-->
