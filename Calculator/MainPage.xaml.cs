@@ -39,6 +39,11 @@
             this.resultText.Text = "0";
             currentEntry = string.Empty;
         }
+
+        private void OnButtonClick(object sender, EventArgs? e)
+        {
+
+        }
         private void OnNegative(object sender, EventArgs e)
         {
             if (currentState == 1)
