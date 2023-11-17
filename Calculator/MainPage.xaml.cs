@@ -1,4 +1,3 @@
-﻿
 using System.Runtime.CompilerServices;
 
 namespace Calculator
