@@ -1,115 +1,126 @@
-﻿namespace Calculator
+﻿
+using System.Runtime.CompilerServices;
+
+namespace Calculator
 {
+    
+
     public partial class MainPage : ContentPage
     {
-        string currentEntry = "";
-        int currentState = 1;
-        string? mathOperator;
-        double firstNumber, secondNumber;
-        string decimalFormat = "N0";
+
+        string currentEquation
+        {
+            get
+            {
+                return resultText.Text;
+            }
+
+            set
+            {
+                resultText.Text = value;
+            }
+        }
+        string lastEquation
+        {
+            get
+            {
+                return CurrentCalculation.Text;
+            }
+            set
+            {
+                CurrentCalculation.Text = value;
+            }
+        }
+
+        string equation = string.Empty;
+
+        static char[] numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+        static char[] operators = ['x', '/', '(', ')', '+', '-', '%'];
+
         public MainPage()
         {
             InitializeComponent();
             OnClear(this, null);
         }
 
-        private void LockNumberValue(string text)
-        {
-            if (double.TryParse(text, out double number))
-            {
-                if (currentState == 1)
-                {
-                    firstNumber = number;
-                }
-                else
-                {
-                    secondNumber = number;
-                }
-
-                currentEntry = string.Empty;
-            }
-        }
-
         private void OnClear(object sender, EventArgs? e)
         {
-            firstNumber = 0;
-            secondNumber = 0;
-            currentState = 1;
-            decimalFormat = "N0";
-            this.resultText.Text = "0";
-            currentEntry = string.Empty;
-        }
-        private void OnNegative(object sender, EventArgs e)
-        {
-            if (currentState == 1)
+            currentEquation = string.Empty;
+            equation = string.Empty;
+
+            if (sender.GetType() == typeof(Button) && ((Button)sender).Text == "CE") 
             {
-                secondNumber = -1;
-                mathOperator = "×";
-                currentState = 2;
-                OnCalculate(this, null);
+                lastEquation = string.Empty;
             }
+            
         }
+
+        private void OnButtonClick(object sender, EventArgs e)
+        {
+            if (sender.GetType() != typeof(Button))
+            {
+                return;
+            }
+
+            string input = ((Button)sender).Text;
+
+            bool isOperator = false;
+
+            
+
+            if (input.IndexOfAny(numbers) == -1)
+            {
+                isOperator = true;
+            }
+
+            if (isOperator && currentEquation.IndexOfAny(numbers) != -1)
+            {
+                lastEquation = currentEquation +  " " + input + " ";
+                currentEquation = string.Empty;
+
+                equation = lastEquation;
+
+                return;
+            }
+
+            currentEquation += input;
+            equation += input;
+
+        }
+
         private void OnPercentage(object sender, EventArgs e)
         {
-            if (currentState == 1)
-            {
-                LockNumberValue(resultText.Text);
-                decimalFormat = "N2";
-                secondNumber = 0.01;
-                mathOperator = "×";
-                currentState = 2;
-                OnCalculate(this, null);
-            }
+            // calculates it as persentage
+
+            equation = "(" + equation + ")/100";
+
+            double result = Calculator.Calculate(equation);
+
+            currentEquation = result.ToString();
+            
         }
-        private void OnSelectNumber(object sender, EventArgs e)
-        {
 
-            Button button = (Button)sender;
-            string pressed = button.Text;
-
-            currentEntry += pressed;
-
-            if ((this.resultText.Text == "0" && pressed == "0")
-                || (currentEntry.Length <= 1 && pressed != "0")
-                || currentState < 0)
-            {
-                this.resultText.Text = "";
-                if (currentState < 0)
-                    currentState *= -1;
-            }
-
-            if (pressed == "," && decimalFormat != "N2")
-            {
-                decimalFormat = "N2";
-            }
-
-            this.resultText.Text += pressed;
-        }
-        private void OnSelectOperator(object sender, EventArgs e)
-        {
-            LockNumberValue(resultText.Text);
-
-            currentState = -2;
-            Button button = (Button)sender;
-            string pressed = button.Text;
-            mathOperator = pressed;
-        }
         private void OnCalculate(object sender, EventArgs? e)
         {
-            if (currentState == 2)
+            try
             {
-                if (secondNumber == 0)
-                    LockNumberValue(resultText.Text);
+                if (lastEquation.IndexOfAny(operators) == -1)
+                {
+                    lastEquation = string.Empty;
+                }
 
-                double result = Calculator.Calculate(firstNumber, secondNumber, mathOperator);
+                double result = Calculator.Calculate(equation);
 
-                this.CurrentCalculation.Text = $"{firstNumber} {mathOperator} {secondNumber}";
+                equation = string.Empty;
 
-                this.resultText.Text = result.ToTrimmedString(decimalFormat);
-                firstNumber = result;
-                secondNumber = 0;
-                currentState = -1;
-                currentEntry = string.Empty;
+                lastEquation = (lastEquation + currentEquation);
+
+                currentEquation = result.ToString();
+                
+
+            } catch (Exception ex)
+            {
+                currentEquation = "?";
             }
         }
     }
