@@ -11,6 +11,10 @@ namespace Calculator
     {
         public static double Calculate(string opperation)
         {
+            opperation = opperation.Replace(" ", "");
+            opperation = opperation.Replace('÷', '/');
+            opperation = opperation.Replace('×', '*');
+
             Expression e = new Expression(opperation);
 
             object result = e.Evaluate();

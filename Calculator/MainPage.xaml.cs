@@ -8,8 +8,34 @@ namespace Calculator
     public partial class MainPage : ContentPage
     {
 
-        string currentEquation = string.Empty;
-        string lastEquation = string.Empty;
+        string currentEquation
+        {
+            get
+            {
+                return resultText.Text;
+            }
+
+            set
+            {
+                resultText.Text = value;
+            }
+        }
+        string lastEquation
+        {
+            get
+            {
+                return CurrentCalculation.Text;
+            }
+            set
+            {
+                CurrentCalculation.Text = value;
+            }
+        }
+
+        string equation = string.Empty;
+
+        static char[] numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+        static char[] operators = ['x', '/', '(', ')', '+', '-', '%'];
 
         public MainPage()
         {
@@ -20,12 +46,11 @@ namespace Calculator
         private void OnClear(object sender, EventArgs? e)
         {
             currentEquation = string.Empty;
-            lastEquation = string.Empty;
-            resultText.Text = string.Empty;
-            
+            equation = string.Empty;
+
             if (sender.GetType() == typeof(Button) && ((Button)sender).Text == "CE") 
             {
-                CurrentCalculation.Text = string.Empty;
+                lastEquation = string.Empty;
             }
             
         }
@@ -40,46 +65,26 @@ namespace Calculator
             string input = ((Button)sender).Text;
 
             bool isOperator = false;
-            switch(input)
+
+            
+
+            if (input.IndexOfAny(numbers) == -1)
             {
-                case "/": // division sign
-                    isOperator = true;
-                    break;
-                case "*":
-                    isOperator = true;
-                    break;
-                case "+":
-                    isOperator = true;
-                    break;
-                case "-":
-                    isOperator = true;
-                    break;
-                case "(":
-                    isOperator = true;
-                    break;
-                case ")":
-                    isOperator = true;
-                    break;
-                case "^":
-                    isOperator = true;
-                    break;
-                case "sqrt": // sqrt sign
-                    isOperator = true;
-                    break;
+                isOperator = true;
             }
 
-            if (isOperator)
+            if (isOperator && currentEquation.IndexOfAny(numbers) != -1)
             {
-                currentEquation +=  " " + input + " ";
+                lastEquation = currentEquation +  " " + input + " ";
+                currentEquation = string.Empty;
 
-                CurrentCalculation.Text = currentEquation;
-                resultText.Text = string.Empty;
+                equation = lastEquation;
+
                 return;
             }
 
             currentEquation += input;
-
-            resultText.Text = currentEquation;
+            equation += input;
 
         }
 
@@ -87,12 +92,11 @@ namespace Calculator
         {
             // calculates it as persentage
 
-            currentEquation = "(" + currentEquation + ")/100";
+            equation = "(" + equation + ")/100";
 
-            OnCalculate(sender, e);
+            double result = Calculator.Calculate(equation);
 
-            // append % to the end
-            resultText.Text = currentEquation + "%";
+            currentEquation = result.ToString();
             
         }
 
@@ -100,13 +104,23 @@ namespace Calculator
         {
             try
             {
-                double result = Calculator.Calculate(currentEquation);
+                if (lastEquation.IndexOfAny(operators) == -1)
+                {
+                    lastEquation = string.Empty;
+                }
 
-                resultText.Text = result.ToString();
+                double result = Calculator.Calculate(equation);
+
+                equation = string.Empty;
+
+                lastEquation = (lastEquation + currentEquation);
+
+                currentEquation = result.ToString();
+                
 
             } catch (Exception ex)
             {
-                
+                currentEquation = "?";
             }
         }
     }
