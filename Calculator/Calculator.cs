@@ -13,7 +13,7 @@ namespace Calculator
         {
             opperation = opperation.Replace('÷', '/');
             opperation = opperation.Replace('×', '*');
-
+            opperation = opperation.Replace(',', '.');
 
             Expression e = new Expression(opperation);
 

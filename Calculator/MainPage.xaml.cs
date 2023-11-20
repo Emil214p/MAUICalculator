@@ -13,7 +13,7 @@ namespace Calculator
             InParantheses // essentially don't use lastEquation
         }
 
-        CalcState state = CalcState.Replace;
+        CalcState state = CalcState.Replace;    
 
         string currentEquation
         {
